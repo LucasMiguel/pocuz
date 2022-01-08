@@ -1,11 +1,11 @@
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-import json
 import sys
+import os
+from plyer import notification
 
 from components.sys_tray_icon import SysTrayIcon
-from controllers.c_data import DataController
 
 
     
@@ -13,7 +13,12 @@ from controllers.c_data import DataController
 if __name__ == "__main__":
     app = QApplication([])
     trayIcon = SysTrayIcon() 
-
+    notification.notify(
+    title = "Pocuz",
+    message = "Mensagem",
+    app_icon = r'images/icon',
+    timeout = 10
+    )
     sys.exit(app.exec())
 
  

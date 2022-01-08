@@ -1,2 +1,5 @@
-# pocuz
-Aplicação multiplataforma para a técnica de pomodoro
+
+# Pocuz
+
+Aplicação produzida em Python com Qt para a utilização
+da técnica de pomodoro.

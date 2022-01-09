@@ -4,6 +4,6 @@
     "longBreakTime": 15,
     "amountSections": 4,
     "alertSound": true,
-    "notify": true,
+    "notification": true,
     "darkTheme": true
 }

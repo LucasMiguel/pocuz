@@ -3,12 +3,17 @@ from PySide6.QtGui import QIcon
 import sys
 
 class SysTrayIcon(QtWidgets.QSystemTrayIcon):
-    def __init__(self):
+    def __init__(self, mainTread):
         super().__init__()
+        self.mainTread = mainTread
         icon = QIcon("images/icon_32.png")
         menu = QtWidgets.QMenu()
         time = menu.addAction("25:00")
         time.triggered.connect(self.openMainWindow)
+        play = menu.addAction("Play")
+        play.triggered.connect(self.playCount)
+        pause = menu.addAction("Pause")
+        pause.triggered.connect(self.pauseCount)
         exitAction = menu.addAction("exit")
         exitAction.triggered.connect(sys.exit)
         
@@ -19,7 +24,9 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.tray.show()
 
     def openMainWindow(self):
-        button = QtWidgets.QPushButton()
-        button.setText = "Coisa"
-        button.show()
+        print("Coisa")
+    def playCount(self):
+        self.mainTread.play()
+    def pauseCount(self):
+        self.mainTread.pause()
         

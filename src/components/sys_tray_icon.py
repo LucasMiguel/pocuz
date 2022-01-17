@@ -1,32 +1,68 @@
+import os
 from PySide6 import QtWidgets
 from PySide6.QtGui import QIcon
-import sys
+
+from screens.mainWindow import MainWindow
 
 class SysTrayIcon(QtWidgets.QSystemTrayIcon):
-    def __init__(self, mainTread):
+    def __init__(self, mainThread):
         super().__init__()
-        self.mainTread = mainTread
+        self.mainThread = mainThread
+
+        self.mainWindow = MainWindow(self.mainThread)
+
         icon = QIcon("images/icon_32.png")
         menu = QtWidgets.QMenu()
-        time = menu.addAction("25:00")
-        time.triggered.connect(self.openMainWindow)
+        self.timeLabel = menu.addAction(self.mainThread.formatTime())
+        self.timeLabel.triggered.connect(self.openMainWindow)
         play = menu.addAction("Play")
         play.triggered.connect(self.playCount)
         pause = menu.addAction("Pause")
         pause.triggered.connect(self.pauseCount)
-        exitAction = menu.addAction("exit")
-        exitAction.triggered.connect(sys.exit)
+        exitAction = menu.addAction("Sair")
+        exitAction.triggered.connect(self.exitApplication)
         
         self.tray = QtWidgets.QSystemTrayIcon()
         self.tray.setIcon(icon)
         self.tray.setContextMenu(menu)
-        self.tray.setToolTip("25:00")
         self.tray.show()
 
+        # Cria o Trigger para o click duplo no icone
+        self.tray.activated.connect(self.iconActivated)
+
+        # Passa a label para alteração
+        self.mainThread.setLabelTrayIcon(self.timeLabel)
+    # __init__
+
+    def iconActivated(self, reason):
+        """Função que irá abrir uma nova janela caso clique duas vezes no icone
+        """
+        if reason == QtWidgets.QSystemTrayIcon.DoubleClick:
+            self.mainWindow.show()
+    # iconActivated
+
     def openMainWindow(self):
-        print("Coisa")
+        """Função que irá abrir uma nova instância da janela principal
+        """
+        self.mainWindow.show()
+    # openMainWindow
+
     def playCount(self):
-        self.mainTread.play()
+        """Função que irá começar a contagem do tempo
+        """
+        self.mainThread.playCount()
+    # playCount
+
     def pauseCount(self):
-        self.mainTread.pause()
+        """Função que irá pausar a contagem do tempo
+        """
+        self.mainThread.pauseCount()
+    # pauseCount
+
+    def exitApplication(self):
+        """Função que irá fechar a aplicação
+        """
+        os._exit(0)
+    # exitApplication
+    
         

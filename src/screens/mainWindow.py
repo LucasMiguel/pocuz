@@ -5,10 +5,10 @@ from PySide6 import QtCore
 
 from controllers.c_data import DataController
 
-
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow, mainTread):
-        self.mainThread = mainTread
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self, mainTread):
+        super(MainWindow, self).__init__()
+        self.mainThread = mainTread        
         self.data = DataController()
         # Estilo dos botões grandes na concentração
         self.concentStyleButtonBig = str(
@@ -50,20 +50,20 @@ class Ui_MainWindow(object):
             "background-color: #79C061;\n"
             "}\n"
         )
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.setWindowModality(QtCore.Qt.WindowModal)
-        MainWindow.resize(400, 413)
-        MainWindow.setMinimumSize(QtCore.QSize(400, 413))
-        MainWindow.setMaximumSize(QtCore.QSize(400, 413))
+        self.setObjectName("mainWindow")
+        self.setWindowModality(QtCore.Qt.WindowModal)
+        self.resize(400, 413)
+        self.setMinimumSize(QtCore.QSize(400, 413))
+        self.setMaximumSize(QtCore.QSize(400, 413))
         font = QtGui.QFont()
-        MainWindow.setFont(font)
+        self.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(
             QtGui.QPixmap("../Imagens/Icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
-        MainWindow.setWindowIcon(icon)
-        MainWindow.setAnimated(True)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.setWindowIcon(icon)
+        self.setAnimated(True)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         ## TIME LABEL =======================================================================================
         self.timeLabel = QtWidgets.QLabel(self.centralwidget)
@@ -191,13 +191,14 @@ class Ui_MainWindow(object):
         exit = self.menuOptions.addAction("Sair")
         self.menuButton.setMenu(self.menuOptions)
         ## ================================================================================================
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
+
         # Envia a label para edição
-        self.mainThread.parseTimeLabel(self.timeLabel)
+        self.mainThread.setLabelWindow(self.timeLabel)
+    # __init__
 
     def onContextMenu(self, point):
         """Função que mostrará o context menu do botão de menu
@@ -206,6 +207,7 @@ class Ui_MainWindow(object):
             point ([type]): Local de abertura
         """
         self.menuOptions.exec_(self.button.mapToGlobal(point))
+    # onContextMenu
 
     def handlePlay(self):
         """Função que irá controlar o botão de play
@@ -215,7 +217,8 @@ class Ui_MainWindow(object):
         """
         self.playButton.setVisible(False)
         self.pauseButton.setVisible(True)
-        self.mainThread.play()
+        self.mainThread.playCount()
+    # handlePlay
 
     def handlePause(self):
         """Função que ir á controlar o botão de pause
@@ -225,18 +228,22 @@ class Ui_MainWindow(object):
         """
         self.pauseButton.setVisible(False)
         self.playButton.setVisible(True)
-        self.mainThread.pause()
+        self.mainThread.pauseCount()
+    # handlePause
 
     def handleConcetration(self):
         self.concetrationButton.setVisible(False)
         self.breakButton.setVisible(True)
+    # handleConcetration
 
     def handleBreak(self):
         self.breakButton.setVisible(False)
         self.concetrationButton.setVisible(True)
+    # handleBreak
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Pocuz"))
-        self.timeLabel.setText(_translate("MainWindow", str(self.mainThread.timeCount)))
+        self.timeLabel.setText(_translate("MainWindow", self.mainThread.formatTime()))
         self.serieLabel.setText(_translate("MainWindow", "Série 1"))
+    # retranslateUi

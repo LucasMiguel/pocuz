@@ -198,6 +198,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Envia a label para edição
         self.mainThread.setLabelWindow(self.timeLabel)
+        self.mainThread.setWindowsMode(self.concentrationMode, self.breakMode)
     # __init__
 
     def onContextMenu(self, point):
@@ -247,3 +248,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timeLabel.setText(_translate("MainWindow", self.mainThread.formatTime()))
         self.serieLabel.setText(_translate("MainWindow", "Série 1"))
     # retranslateUi
+
+    def concentrationMode(self):
+        """Função que irá deixar a janela no estilo para iniciar uma concentração 
+        """
+        self.timeLabel.setStyleSheet("color: #E63635")
+        self.playButton.setStyleSheet(self.concentStyleButtonBig)
+        self.playButton.setVisible(True)
+        self.pauseButton.setStyleSheet(self.concentStyleButtonBig)
+        self.pauseButton.setVisible(False)
+        self.concetrationButton.setVisible(False)
+        self.breakButton.setVisible(True)
+        self.undoButton.setStyleSheet(self.concentStyleButtonSmall)
+    # concetrationMode
+
+    def breakMode(self):
+        """Função que irá deixar a janela no estilo para uma pausa
+        """
+        self.timeLabel.setStyleSheet("color: #79C061")
+        self.playButton.setStyleSheet(self.breakStyleButtonBig)
+        self.playButton.setVisible(True)
+        self.pauseButton.setStyleSheet(self.breakStyleButtonBig)
+        self.pauseButton.setVisible(False)
+        self.concetrationButton.setVisible(True)
+        self.breakButton.setVisible(False)
+        self.undoButton.setStyleSheet(self.breakStyleButtonSmall)
+    # breakMode

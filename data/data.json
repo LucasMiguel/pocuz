@@ -2,7 +2,7 @@
     "sectionsTime": 1,
     "shortBreakTime": 1,
     "longBreakTime": 3,
-    "amountSections": 4,
+    "amountSections": 2,
     "alertSound": true,
     "notification": true,
     "darkTheme": true

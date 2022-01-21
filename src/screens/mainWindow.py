@@ -199,6 +199,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Envia a label para edição
         self.mainThread.setLabelWindow(self.timeLabel)
         self.mainThread.setWindowsMode(self.concentrationMode, self.breakMode)
+        self.mainThread.setLabelSeries(self.serieLabel)
     # __init__
 
     def onContextMenu(self, point):

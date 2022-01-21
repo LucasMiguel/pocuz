@@ -51,12 +51,16 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         """Função que irá começar a contagem do tempo
         """
         self.mainThread.playCount()
+        self.mainWindow.pauseButton.setVisible(True)
+        self.mainWindow.playButton.setVisible(False)
     # playCount
 
     def pauseCount(self):
         """Função que irá pausar a contagem do tempo
         """
         self.mainThread.pauseCount()
+        self.mainWindow.pauseButton.setVisible(False)
+        self.mainWindow.playButton.setVisible(True)
     # pauseCount
 
     def exitApplication(self):

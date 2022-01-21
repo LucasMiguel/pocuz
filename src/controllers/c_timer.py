@@ -65,6 +65,15 @@ class MainThread(Thread):
         self.timeLabelTray = timeLabelTray
     # setLabelTrayIcon
 
+    def setLabelSeries(self, seriesLabel):
+        """Função que recolherá o número da série
+
+        Args:
+            seriesLabel (label): Label com a quantidade de ciclos já passados
+        """
+        self.labelSeries = seriesLabel
+    # setLabelSeries
+
     def setWindowsMode(self, concetrationMode, breakMode):
         """Função que irá pegar as funções de modo de janela para alteração no final do ciclo
 
@@ -160,6 +169,7 @@ class MainThread(Thread):
     def updateScreen(self):
         if(self.isTimeConcentration):
             self.setConcetrationMode()
+            self.labelSeries.setText("Série "+str(self.concetrationCount))
         else:
             self.setBreakMode()
     # updateScreen

@@ -13,7 +13,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # Estilo dos botões grandes na concentração
         self.concentStyleButtonBig = str(
             "QPushButton{\n"
-            "background-color: rgb(230, 54, 53);\n"
+            "background-color: #E63635;\n"
             "border-radius: 35px;\n"
             "}\n"
             "QPushButton:hover{\n"
@@ -23,17 +23,17 @@ class MainWindow(QtWidgets.QMainWindow):
         # Estilo dos botões grandes na pausa
         self.breakStyleButtonBig = str(
             "QPushButton{\n"
-            "background-color: rgb(103, 183, 76);\n"
+            "background-color: #79C061;\n"
             "border-radius: 35px;\n"
             "}\n"
             "QPushButton:hover{\n"
-            "background-color: #79C061;\n"
+            "background-color: #B2D9A5;\n"
             "}\n"
         )
         # Estilo dos botãos pequenos na concentração
         self.concentStyleButtonSmall = str(
             "QPushButton{\n"
-            "background-color:rgb(230, 54, 53);\n"
+            "background-color:#E63635;\n"
             "border-radius: 22px;\n"
             "}\n"
             "QPushButton:hover{\n"
@@ -43,11 +43,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # Estilo dos botões pequenos na pausa
         self.breakStyleButtonSmall = str(
             "QPushButton{\n"
-            "background-color: rgb(103, 183, 76);\n"
+            "background-color: #79C061;\n"
             "border-radius: 22px;\n"
             "}\n"
             "QPushButton:hover{\n"
-            "background-color: #79C061;\n"
+            "background-color: #B2D9A5;\n"
             "}\n"
         )
         self.setObjectName("mainWindow")
@@ -68,7 +68,7 @@ class MainWindow(QtWidgets.QMainWindow):
         ## TIME LABEL =======================================================================================
         self.timeLabel = QtWidgets.QLabel(self.centralwidget)
         self.timeLabel.setGeometry(QtCore.QRect(70, 80, 261, 121))
-        font = QtGui.QFont("Lato", 60, QtGui.QFont.Light)
+        font = QtGui.QFont("Lato", 55, QtGui.QFont.Light)
         self.timeLabel.setFont(font)
         self.timeLabel.setStyleSheet("color: #E63635")
         self.timeLabel.setAlignment(QtCore.Qt.AlignCenter)
@@ -76,7 +76,7 @@ class MainWindow(QtWidgets.QMainWindow):
         ## SERIE LABEL ======================================================================================
         self.serieLabel = QtWidgets.QLabel(self.centralwidget)
         self.serieLabel.setGeometry(QtCore.QRect(170, 190, 61, 18))
-        self.serieLabel.setStyleSheet("color:#E63635")
+        self.serieLabel.setStyleSheet("color:#6A6969")
         self.serieLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.serieLabel.setObjectName("serieLabel")
         ##PLAY BUTTON =======================================================================================
@@ -157,6 +157,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.undoButton.setFlat(True)
         self.undoButton.setObjectName("undoButton")
         self.undoButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.undoButton.clicked.connect(self.handleReset)
         ## MENU BUTTON ====================================================================================
         self.menuButton = QtWidgets.QPushButton(self.centralwidget)
         self.menuButton.setGeometry(QtCore.QRect(360, 380, 50, 30))
@@ -195,11 +196,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
-
-        # Envia a label para edição
-        self.mainThread.setLabelWindow(self.timeLabel)
-        self.mainThread.setWindowsMode(self.concentrationMode, self.breakMode)
-        self.mainThread.setLabelSeries(self.serieLabel)
     # __init__
 
     def onContextMenu(self, point):
@@ -233,14 +229,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mainThread.pauseCount()
     # handlePause
 
+    def handleReset(self):
+        """Função com a ação de resetar o tempo
+        """
+        self.mainThread.resetCount()
+    # handleReset
     def handleConcetration(self):
         self.concetrationButton.setVisible(False)
         self.breakButton.setVisible(True)
+        self.mainThread.pauseCount()
+        self.mainThread.setConcetrationTime()
+        self.mainThread.resetCount()
+        self.mainThread.updateTimeLabels()
+        self.concentrationMode()
     # handleConcetration
 
     def handleBreak(self):
         self.breakButton.setVisible(False)
         self.concetrationButton.setVisible(True)
+        self.mainThread.pauseCount()        
+        self.mainThread.setBreakTime()
+        self.mainThread.resetCount()
+        self.mainThread.updateTimeLabels()
+        self.breakMode()
     # handleBreak
 
     def retranslateUi(self, MainWindow):

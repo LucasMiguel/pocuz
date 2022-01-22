@@ -22,16 +22,17 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         exitAction = menu.addAction("Sair")
         exitAction.triggered.connect(self.exitApplication)
         
-        self.tray = QtWidgets.QSystemTrayIcon()
-        self.tray.setIcon(icon)
-        self.tray.setContextMenu(menu)
-        self.tray.show()
+        self.setIcon(icon)
+        self.setContextMenu(menu)
+        self.show()
+        
 
         # Cria o Trigger para o click duplo no icone
-        self.tray.activated.connect(self.iconActivated)
+        self.activated.connect(self.iconActivated)
 
         # Passa a label para alteração
-        self.mainThread.setLabelTrayIcon(self.timeLabel)
+        self.mainThread.setTrayIcon(self)
+        self.mainThread.setWindow(self.mainWindow)
     # __init__
 
     def iconActivated(self, reason):

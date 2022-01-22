@@ -2,6 +2,7 @@ from threading import Thread
 from time import strftime, gmtime, time
 import time
 from components.notification import makeNotification
+from PySide6.QtGui import QIcon
 
 from controllers.c_data import DataController
 
@@ -32,7 +33,8 @@ class MainThread(Thread):
                 if self.timeCount == 0:
                     self.endTimer()
                 # Delay de 1 segundo
-                time.sleep(1)
+                # time.sleep(1)
+                time.sleep(0.2)
 
     # run
 
@@ -46,16 +48,6 @@ class MainThread(Thread):
 
     # setTime
 
-    def setLabelWindow(self, timeLabelWindow):
-        """Função que irá trazer a referência da label da janela
-
-        Args:
-            labelTime (Referência): Referência ao campo que será atualizado
-        """
-        self.timeLabelWindow = timeLabelWindow
-
-    # setLabelWindow
-
     def setLabelTrayIcon(self, timeLabelTray):
         """Função que irá trazer a referência da label do trayIcon
 
@@ -63,27 +55,28 @@ class MainThread(Thread):
             labelTime (Referência): Referência ao campo que será atualizado
         """
         self.timeLabelTray = timeLabelTray
+
     # setLabelTrayIcon
 
-    def setLabelSeries(self, seriesLabel):
-        """Função que recolherá o número da série
+    def setWindow(self, mainWindow):
+        """Função que irá setar a janela principal
 
         Args:
-            seriesLabel (label): Label com a quantidade de ciclos já passados
+            mainWindow (Ref QMainWindow): Referência da Janela principal
         """
-        self.labelSeries = seriesLabel
-    # setLabelSeries
+        self.mainWindow = mainWindow
 
-    def setWindowsMode(self, concetrationMode, breakMode):
-        """Função que irá pegar as funções de modo de janela para alteração no final do ciclo
+    # setWindow
+
+    def setTrayIcon(self, trayIcon):
+        """Função que recebe a instância do trayIcon
 
         Args:
-            concetrationMode (function): Função que mudará a janela para o modo de concetração
-            breakMode (function): Função que irá mudar a janela para o modo de pausa
+            trayIcon (Ref QTrayIcon): Referência da Instância do TrayIcon
         """
-        self.setConcetrationMode = concetrationMode
-        self.setBreakMode = breakMode
-    # setWindowsMode
+        self.trayIcon = trayIcon
+
+    # setTrayIcon
 
     def formatTime(self):
         """Função que irá formatar os segundos em minutos   
@@ -109,13 +102,16 @@ class MainThread(Thread):
 
     # pauseCount
 
-    def updateTimeLabels(self):
-        """Função que irá atualizar a tela das janelas
+    def resetCount(self):
+        """Função que resetará o tempo de concentração ou de pausa
         """
-        self.timeLabelWindow.setText(self.formatTime())
-        self.timeLabelTray.setText(self.formatTime())
-
-    # updateTimeLabels
+        if self.isTimeConcentration:
+            self.setTime(self.data.sectionsTime)
+        elif self.isTimeBreak:
+            self.setTime(self.data.shortBreakTime)
+        else:
+            self.setTime(self.data.longBreakTime)
+    # resetCount
 
     def endTimer(self):
         """Função que irá finalizar cada tempo
@@ -157,6 +153,7 @@ class MainThread(Thread):
         self.isTimeConcentration = False
         self.isTimeBreak = True
         self.isTimeLongBreak = False
+
     # setBreakTime
 
     def setLongBreakTime(self):
@@ -164,12 +161,34 @@ class MainThread(Thread):
         self.isTimeConcentration = False
         self.isTimeBreak = False
         self.isTimeLongBreak = True
+
     # setLongBreakTime
 
+    def updateTimeLabels(self):
+        """Função que irá atualizar a tela das janelas
+        """
+        self.mainWindow.timeLabel.setText(self.formatTime())
+        self.trayIcon.timeLabel.setText(self.formatTime())
+
+    # updateTimeLabels
+
     def updateScreen(self):
-        if(self.isTimeConcentration):
-            self.setConcetrationMode()
-            self.labelSeries.setText("Série "+str(self.concetrationCount))
+        """Função que atualiza a janela principal e do systemTrayIcon
+        """
+        if (self.isTimeConcentration):
+            # Mudanças na janela
+            self.mainWindow.concentrationMode()
+            self.mainWindow.serieLabel.setText("Série " +
+                                               str(self.concetrationCount))
+            # Mudanças no system Tray Icon
+            icon = QIcon("images/icon_32.png")
+            self.trayIcon.setIcon(icon)
+
         else:
-            self.setBreakMode()
+            # Mudanças na janela
+            self.mainWindow.breakMode()
+            # Mudanças no system Tray Icon
+            icon = QIcon("images/icon_32_break.png")
+            self.trayIcon.setIcon(icon)
+
     # updateScreen

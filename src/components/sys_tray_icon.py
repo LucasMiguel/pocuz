@@ -12,18 +12,36 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.mainWindow = MainWindow(self.mainThread)
 
         icon = QIcon("images/icon_32.png")
-        menu = QtWidgets.QMenu()
-        self.timeLabel = menu.addAction(self.mainThread.formatTime())
-        self.timeLabel.triggered.connect(self.openMainWindow)
-        play = menu.addAction("Play")
-        play.triggered.connect(self.playCount)
-        pause = menu.addAction("Pause")
-        pause.triggered.connect(self.pauseCount)
-        exitAction = menu.addAction("Sair")
+        self.menu = QtWidgets.QMenu()
+        self.timeLabel = self.menu.addAction(self.mainThread.formatTime())
+        self.timeLabel.triggered.connect(self.openMainWindow)        
+        self.playTime = self.menu.addAction("Iniciar tempo")
+        self.playTime.triggered.connect(self.mainThread.playCount)
+        self.pauseTime = self.menu.addAction("Pausar tempo")
+        self.pauseTime.triggered.connect(self.mainThread.pauseCount)
+        self.pauseTime.setVisible(False)
+        self.resetTime = self.menu.addAction("Reiniciar ciclo")
+        self.resetTime.triggered.connect(self.mainThread.resetCount)
+        self.menu.addSeparator()
+        self.subMenu = QtWidgets.QMenu()
+        self.subMenu.setTitle("Recomeçar Ciclo")        
+        self.startConcentratio = self.subMenu.addAction("Começar concetração")
+        self.startConcentratio.triggered.connect(
+            lambda checked: self.jumpToCicles(1))
+        self.startShortBreak = self.subMenu.addAction("Começar descanso")
+        self.startShortBreak.triggered.connect(
+            lambda checked: self.jumpToCicles(2))
+        self.srtatLongBreak = self.subMenu.addAction("Começar descanso longo")
+        self.srtatLongBreak.triggered.connect(
+            lambda checked: self.jumpToCicles(3))
+        self.menu.addMenu(self.subMenu)
+        self.settings = self.menu.addAction("Preferências")
+        self.menu.addSeparator()
+        exitAction = self.menu.addAction("Sair")
         exitAction.triggered.connect(self.exitApplication)
         
         self.setIcon(icon)
-        self.setContextMenu(menu)
+        self.setContextMenu(self.menu)
         self.show()
         
 
@@ -48,21 +66,22 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.mainWindow.show()
     # openMainWindow
 
-    def playCount(self):
-        """Função que irá começar a contagem do tempo
-        """
-        self.mainThread.playCount()
-        self.mainWindow.pauseButton.setVisible(True)
-        self.mainWindow.playButton.setVisible(False)
-    # playCount
+    def jumpToCicles(self, type):
+        """Função que irá pular para um ciclo específico
 
-    def pauseCount(self):
-        """Função que irá pausar a contagem do tempo
+        Args:
+            type (int): Indica qual o tipo do ciclo == 1 = Concentração | 2 = Pausa | 3 = Pausa Longa
         """
-        self.mainThread.pauseCount()
-        self.mainWindow.pauseButton.setVisible(False)
-        self.mainWindow.playButton.setVisible(True)
-    # pauseCount
+        if(type == 1):
+            self.mainThread.setConcetrationTime()
+        elif(type == 2):
+            self.mainThread.setBreakTime()
+        else:
+            self.mainThread.setLongBreakTime()
+        self.mainThread.updateScreen()
+        self.mainThread.updateTimeLabels()
+        self.mainThread.playCount()
+    # jumpToCicles
 
     def exitApplication(self):
         """Função que irá fechar a aplicação

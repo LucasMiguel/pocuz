@@ -92,13 +92,20 @@ class MainThread(Thread):
         """Função que irá continuar a contagem
         """
         self.runCount = True
-
+        self.mainWindow.pauseButton.setVisible(True)
+        self.mainWindow.playButton.setVisible(False)
+        self.trayIcon.playTime.setVisible(False)
+        self.trayIcon.pauseTime.setVisible(True)
     # playCount
 
     def pauseCount(self):
         """Função que irá pausar o relógio
         """
         self.runCount = False
+        self.mainWindow.pauseButton.setVisible(False)
+        self.mainWindow.playButton.setVisible(True)
+        self.trayIcon.playTime.setVisible(True)
+        self.trayIcon.pauseTime.setVisible(False)
 
     # pauseCount
 
@@ -124,11 +131,11 @@ class MainThread(Thread):
             else:
                 msg = "Fim da concentração\nIniciar descanço longo!"
                 self.setLongBreakTime()
-                self.concetrationCount = 1
+                self.concetrationCount = 0
         else:
             msg = "Fim do descanço\nIniciar concentração!"
-            self.setConcetrationTime()
             self.concetrationCount += 1
+            self.setConcetrationTime()
         #Gera a notificação do final e do inicio do próximo ciclo
         makeNotification(msg, self.data.alertSound)
         self.updateScreen()
@@ -143,6 +150,9 @@ class MainThread(Thread):
         self.isTimeConcentration = True
         self.isTimeBreak = False
         self.isTimeLongBreak = False
+        self.mainWindow.serieLabel.setText("Série " +
+                                               str(self.concetrationCount))
+        self.mainWindow.serieLabel.setStyleSheet("color: #6A6969")
 
     # setConcentrationTime
 
@@ -153,6 +163,8 @@ class MainThread(Thread):
         self.isTimeConcentration = False
         self.isTimeBreak = True
         self.isTimeLongBreak = False
+        self.mainWindow.serieLabel.setText("Tempo de descanso")
+        self.mainWindow.serieLabel.setStyleSheet("color: #79C061")
 
     # setBreakTime
 
@@ -161,6 +173,8 @@ class MainThread(Thread):
         self.isTimeConcentration = False
         self.isTimeBreak = False
         self.isTimeLongBreak = True
+        self.mainWindow.serieLabel.setText("Tempo de um longo descanso")
+        self.mainWindow.serieLabel.setStyleSheet("color: #79C061")
 
     # setLongBreakTime
 
@@ -177,9 +191,7 @@ class MainThread(Thread):
         """
         if (self.isTimeConcentration):
             # Mudanças na janela
-            self.mainWindow.concentrationMode()
-            self.mainWindow.serieLabel.setText("Série " +
-                                               str(self.concetrationCount))
+            self.mainWindow.concentrationMode()            
             # Mudanças no system Tray Icon
             icon = QIcon("images/icon_32.png")
             self.trayIcon.setIcon(icon)

@@ -75,7 +75,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timeLabel.setObjectName("timeLabel")
         ## SERIE LABEL ======================================================================================
         self.serieLabel = QtWidgets.QLabel(self.centralwidget)
-        self.serieLabel.setGeometry(QtCore.QRect(170, 190, 61, 18))
+        self.serieLabel.setGeometry(QtCore.QRect(100, 190, 200, 18))
         self.serieLabel.setStyleSheet("color:#6A6969")
         self.serieLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.serieLabel.setObjectName("serieLabel")

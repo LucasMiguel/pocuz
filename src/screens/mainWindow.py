@@ -51,15 +51,15 @@ class MainWindow(QtWidgets.QMainWindow):
             "}\n"
         )
         self.setObjectName("mainWindow")
-        self.setWindowModality(QtCore.Qt.WindowModal)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.resize(400, 413)
         self.setMinimumSize(QtCore.QSize(400, 413))
-        self.setMaximumSize(QtCore.QSize(400, 413))       
+        self.setMaximumSize(QtCore.QSize(400, 413))    
         font = QtGui.QFont()
         self.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(
-            QtGui.QPixmap("../Imagens/Icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap("../Imagens/Icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.On
         )
         self.setWindowIcon(icon)
         self.setAnimated(True)
@@ -188,15 +188,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menuButton.customContextMenuRequested.connect(self.onContextMenu)
         self.menuOptions = QtWidgets.QMenu()                
         self.menuOptions.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        fontMenu = QtGui.QFont("Lato", 12, QtGui.QFont.Light)
         restartCicle = self.menuOptions.addAction("Recomeçar Ciclo")
+        restartCicle.setFont(font)
         restartCicle.triggered.connect(self.mainThread.resetCount)
         settings = self.menuOptions.addAction("Preferências")
         settings.triggered.connect(self.mainThread.openSettingsWindow)
+        settings.setFont(font)
         about = self.menuOptions.addAction("Sobre")
         about.triggered.connect(self.mainThread.openAboutWindow)
+        about.setFont(font)
         self.menuOptions.addSeparator()
         exit = self.menuOptions.addAction("Sair")
         exit.triggered.connect(self.mainThread.exitApplication)
+        exit.setFont(font)
         self.menuButton.setMenu(self.menuOptions)
         ## ================================================================================================
         self.setCentralWidget(self.centralwidget)
@@ -213,7 +218,7 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         self.menuOptions.exec_(self.button.mapToGlobal(point))
         # onContextMenu
-
+    
     def handleConcetration(self):
         self.concetrationButton.setVisible(False)
         self.breakButton.setVisible(True)

@@ -14,7 +14,7 @@ from screens.mainWindow import MainWindow
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     # Desabilita o fechamento da janela pelo modal
-    app.setQuitOnLastWindowClosed(False)
+    app.setQuitOnLastWindowClosed(False)    
     # Define a fonte
     QtGui.QFontDatabase.addApplicationFont("fonts/Lato-Light.ttf")
     # Instância a thread principal

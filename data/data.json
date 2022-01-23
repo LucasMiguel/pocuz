@@ -5,5 +5,5 @@
     "amountSections": 2,
     "alertSound": true,
     "notification": true,
-    "darkTheme": false
+    "darkTheme": true
 }

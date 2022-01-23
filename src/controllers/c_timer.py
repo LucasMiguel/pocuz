@@ -51,8 +51,7 @@ class MainThread(Thread):
                 if self.timeCount == 0:
                     self.endTimer()
                 # Delay de 1 segundo
-                # time.sleep(1)
-                time.sleep(0.2)
+                time.sleep(1)
         # run
 
     def setTime(self, minutes):
@@ -122,10 +121,11 @@ class MainThread(Thread):
             self.concetrationCount += 1
             self.setConcetrationTime()
         #Gera a notificação do final e do inicio do próximo ciclo
-        if(self.data.notification):
-            makeNotification(msg, self.data.alertSound)
+        if(self.data.notification):        
+            makeNotification(msg, self)
         self.updateScreen()
         self.updateTimeLabels()
+        self.openMainWindow()
         # endTimer
 
     def setConcetrationTime(self):
@@ -192,10 +192,9 @@ class MainThread(Thread):
 
     def openMainWindow(self):
         """Abre a janela principal
-        """
+        """        
         self.setDarkMode()
         self.mainWindow.show()
-        self.mainWindow.setFocus()
         # openMainWindow
 
     def openSettingsWindow(self):
@@ -205,7 +204,6 @@ class MainThread(Thread):
         self.settingsWindow = SettingWindow(self.data, self)        
         self.setDarkMode()
         self.settingsWindow.show()
-        self.settingsWindow.setFocus()
         # openSettingsWindow
 
     def openAboutWindow(self):
@@ -226,6 +224,9 @@ class MainThread(Thread):
                 "QMenu{\n"
                 "background-color: #011627;\n"
                 "color:white;\n"            
+                "}\n"
+                "QMenu::item{\n"
+                "color: white;\n"
                 "}\n"
                 "QMenu::item:selected{\n"
                 "background-color: rgba(11,222,236,0.37);\n"            

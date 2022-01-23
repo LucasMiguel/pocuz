@@ -30,10 +30,7 @@ class MainThread(Thread):
         self.mainWindow = MainWindow(self)
         # Abre uma instância da janela pelo systrayIcon
         self.openMainWindow()
-        # Instância da janela de preferências
-        self.settingsWindow = SettingWindow()
-
-    # __init__
+        # __init__
 
     def run(self):
         """Função principal de contagem do tempo
@@ -48,8 +45,7 @@ class MainThread(Thread):
                 # Delay de 1 segundo
                 # time.sleep(1)
                 time.sleep(0.2)
-
-    # run
+        # run
 
     def setTime(self, minutes):
         """Função que formata o tempo trazido das configurações para segundos, para controle do tempo
@@ -58,18 +54,7 @@ class MainThread(Thread):
             minutes (int): valor do tempo escolhido em minutos
         """
         self.timeCount = minutes * 60
-
-    # setTime
-
-    def setLabelTrayIcon(self, timeLabelTray):
-        """Função que irá trazer a referência da label do trayIcon
-
-        Args:
-            labelTime (Referência): Referência ao campo que será atualizado
-        """
-        self.timeLabelTray = timeLabelTray
-
-    # setLabelTrayIcon
+        # setTime
 
     def formatTime(self):
         """Função que irá formatar os segundos em minutos   
@@ -78,8 +63,7 @@ class MainThread(Thread):
             string: retorna os minutos já formatados
         """
         return strftime("%M:%S", gmtime(self.timeCount))
-
-    # formatTime
+        # formatTime
 
     def playCount(self):
         """Função que irá continuar a contagem
@@ -89,8 +73,7 @@ class MainThread(Thread):
         self.mainWindow.playButton.setVisible(False)
         self.trayIcon.playTime.setVisible(False)
         self.trayIcon.pauseTime.setVisible(True)
-
-    # playCount
+        # playCount
 
     def pauseCount(self):
         """Função que irá pausar o relógio
@@ -100,20 +83,19 @@ class MainThread(Thread):
         self.mainWindow.playButton.setVisible(True)
         self.trayIcon.playTime.setVisible(True)
         self.trayIcon.pauseTime.setVisible(False)
-
-    # pauseCount
+        # pauseCount
 
     def resetCount(self):
         """Função que resetará o tempo de concentração ou de pausa
         """
+        self.data.getData()
         if self.isTimeConcentration:
             self.setTime(self.data.sectionsTime)
         elif self.isTimeBreak:
             self.setTime(self.data.shortBreakTime)
         else:
             self.setTime(self.data.longBreakTime)
-
-    # resetCount
+        # resetCount
 
     def endTimer(self):
         """Função que irá finalizar cada tempo
@@ -132,15 +114,16 @@ class MainThread(Thread):
             self.concetrationCount += 1
             self.setConcetrationTime()
         #Gera a notificação do final e do inicio do próximo ciclo
-        makeNotification(msg, self.data.alertSound)
+        if(self.data.notification):
+            makeNotification(msg, self.data.alertSound)
         self.updateScreen()
         self.updateTimeLabels()
-
-    # endTimer
+        # endTimer
 
     def setConcetrationTime(self):
         """Função que irá informar que é um tempo de concentração
         """
+        self.data.getData()
         self.setTime(self.data.sectionsTime)
         self.isTimeConcentration = True
         self.isTimeBreak = False
@@ -148,38 +131,38 @@ class MainThread(Thread):
         self.mainWindow.serieLabel.setText("Série " +
                                            str(self.concetrationCount))
         self.mainWindow.serieLabel.setStyleSheet("color: #6A6969")
-
-    # setConcentrationTime
+        # setConcentrationTime
 
     def setBreakTime(self):
         """Função que irá informar que é um tempo de pausa
         """
+        self.data.getData()
         self.setTime(self.data.shortBreakTime)
         self.isTimeConcentration = False
         self.isTimeBreak = True
         self.isTimeLongBreak = False
         self.mainWindow.serieLabel.setText("Tempo de descanso")
         self.mainWindow.serieLabel.setStyleSheet("color: #79C061")
-
-    # setBreakTime
+        # setBreakTime
 
     def setLongBreakTime(self):
+        """Função que irá indicar que está em uma pausa longa
+        """
+        self.data.getData()
         self.setTime(self.data.longBreakTime)
         self.isTimeConcentration = False
         self.isTimeBreak = False
         self.isTimeLongBreak = True
         self.mainWindow.serieLabel.setText("Tempo de um longo descanso")
         self.mainWindow.serieLabel.setStyleSheet("color: #79C061")
-
-    # setLongBreakTime
+        # setLongBreakTime
 
     def updateTimeLabels(self):
         """Função que irá atualizar a tela das janelas
         """
         self.mainWindow.timeLabel.setText(self.formatTime())
         self.trayIcon.timeLabel.setText(self.formatTime())
-
-    # updateTimeLabels
+        # updateTimeLabels
 
     def updateScreen(self):
         """Função que atualiza a janela principal e do systemTrayIcon
@@ -197,17 +180,19 @@ class MainThread(Thread):
             # Mudanças no system Tray Icon
             icon = QIcon("images/icon_32_break.png")
             self.trayIcon.setIcon(icon)
-
-    # updateScreen
+        # updateScreen
 
     def openMainWindow(self):
         """Abre a janela principal
         """
         self.mainWindow.show()
+        # openMainWindow
 
-    # openMainWindow
-
-    def openSettings(self):
+    def openSettingsWindow(self):
         """Abre a janela de preferências
         """
+        # Instância da janela de preferências
+        self.settingsWindow = SettingWindow(self.data)
         self.settingsWindow.show()
+        # openSettingsWindow
+

@@ -186,7 +186,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menuButton.customContextMenuRequested.connect(self.onContextMenu)
         self.menuOptions = QtWidgets.QMenu()
         restartCicle = self.menuOptions.addAction("Recomeçar Ciclo")
+        restartCicle.triggered.connect(self.mainThread.resetCount)
         settings = self.menuOptions.addAction("Preferências")
+        settings.triggered.connect(self.mainThread.openSettingsWindow)
         about = self.menuOptions.addAction("Sobre")
         self.menuOptions.addSeparator()
         exit = self.menuOptions.addAction("Sair")
@@ -196,7 +198,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
-    # __init__
+        # __init__
 
     def onContextMenu(self, point):
         """Função que mostrará o context menu do botão de menu
@@ -205,7 +207,7 @@ class MainWindow(QtWidgets.QMainWindow):
             point ([type]): Local de abertura
         """
         self.menuOptions.exec_(self.button.mapToGlobal(point))
-    # onContextMenu
+        # onContextMenu
 
     def handleConcetration(self):
         self.concetrationButton.setVisible(False)
@@ -215,7 +217,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mainThread.resetCount()
         self.mainThread.updateTimeLabels()
         self.concentrationMode()
-    # handleConcetration
+        # handleConcetration
 
     def handleBreak(self):
         self.breakButton.setVisible(False)
@@ -225,14 +227,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.mainThread.resetCount()
         self.mainThread.updateTimeLabels()
         self.breakMode()
-    # handleBreak
+        # handleBreak
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Pocuz"))
         self.timeLabel.setText(_translate("MainWindow", self.mainThread.formatTime()))
         self.serieLabel.setText(_translate("MainWindow", "Série 1"))
-    # retranslateUi
+        # retranslateUi
 
     def concentrationMode(self):
         """Função que irá deixar a janela no estilo para iniciar uma concentração 
@@ -245,7 +247,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.concetrationButton.setVisible(False)
         self.breakButton.setVisible(True)
         self.undoButton.setStyleSheet(self.concentStyleButtonSmall)
-    # concetrationMode
+        # concetrationMode
 
     def breakMode(self):
         """Função que irá deixar a janela no estilo para uma pausa
@@ -258,4 +260,4 @@ class MainWindow(QtWidgets.QMainWindow):
         self.concetrationButton.setVisible(True)
         self.breakButton.setVisible(False)
         self.undoButton.setStyleSheet(self.breakStyleButtonSmall)
-    # breakMode
+        # breakMode

@@ -9,8 +9,8 @@ class DataController(object):
             self.shortBreakTime = self.data['shortBreakTime']
             self.longBreakTime = self.data['longBreakTime']
             self.amountSections = self.data['amountSections']
+            self.notification = self.data['notification']
             self.alertSound = self.data['alertSound']
-            self.notify = self.data['notification']
             self.darkTheme = self.data['darkTheme']
         except print(Exception):
             pass
@@ -33,7 +33,7 @@ class DataController(object):
             self.data['longBreakTime'] = self.longBreakTime
             self.data['amountSections'] = self.amountSections
             self.data['alertSound'] = self.alertSound
-            self.data['notification'] = self.notify
+            self.data['notification'] = self.notification
             self.data['darkTheme'] = self.darkTheme
             file.seek(0)
             try:

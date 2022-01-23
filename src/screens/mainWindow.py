@@ -93,7 +93,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.playButton.setFlat(True)
         self.playButton.setObjectName("playButton")
         self.playButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.playButton.clicked.connect(self.handlePlay)
+        self.playButton.clicked.connect(self.mainThread.playCount)
         ##PAUSE BUTTON ======================================================================================
         self.pauseButton = QtWidgets.QPushButton(self.centralwidget)
         self.pauseButton.setVisible(False)
@@ -109,7 +109,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pauseButton.setFlat(True)
         self.pauseButton.setObjectName("pauseButton")
         self.pauseButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pauseButton.clicked.connect(self.handlePause)
+        self.pauseButton.clicked.connect(self.mainThread.pauseCount)
         ## CONCETRATION BUTTON ====================================================================================
         self.concetrationButton = QtWidgets.QPushButton(self.centralwidget)
         self.concetrationButton.setVisible(False)
@@ -157,7 +157,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.undoButton.setFlat(True)
         self.undoButton.setObjectName("undoButton")
         self.undoButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.undoButton.clicked.connect(self.handleReset)
+        self.undoButton.clicked.connect(self.mainThread.resetCount)
         ## MENU BUTTON ====================================================================================
         self.menuButton = QtWidgets.QPushButton(self.centralwidget)
         self.menuButton.setGeometry(QtCore.QRect(360, 380, 50, 30))
@@ -207,33 +207,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menuOptions.exec_(self.button.mapToGlobal(point))
     # onContextMenu
 
-    def handlePlay(self):
-        """Função que irá controlar o botão de play
-
-        Args:
-            type (int): Define se é play na concentração ou descanso | 1 = concentração || 2 = descanso
-        """
-        self.playButton.setVisible(False)
-        self.pauseButton.setVisible(True)
-        self.mainThread.playCount()
-    # handlePlay
-
-    def handlePause(self):
-        """Função que ir á controlar o botão de pause
-
-        Args:
-            type (int): Define se é pause na concentração ou descanso | 1 = concentração || 2 = descanso
-        """
-        self.pauseButton.setVisible(False)
-        self.playButton.setVisible(True)
-        self.mainThread.pauseCount()
-    # handlePause
-
-    def handleReset(self):
-        """Função com a ação de resetar o tempo
-        """
-        self.mainThread.resetCount()
-    # handleReset
     def handleConcetration(self):
         self.concetrationButton.setVisible(False)
         self.breakButton.setVisible(True)

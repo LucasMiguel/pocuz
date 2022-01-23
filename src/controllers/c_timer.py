@@ -118,7 +118,7 @@ class MainThread(Thread):
     def endTimer(self):
         """Função que irá finalizar cada tempo
         """
-        self.runCount = False
+        self.pauseCount()
         if (self.isTimeConcentration):
             if (self.concetrationCount != self.data.amountSections):
                 msg = "Fim da concentração\nIniciar descanço!"

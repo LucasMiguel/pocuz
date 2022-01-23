@@ -4,7 +4,10 @@ import time
 from components.notification import makeNotification
 from PySide6.QtGui import QIcon
 
+from components.sys_tray_icon import SysTrayIcon
 from controllers.c_data import DataController
+from screens.mainWindow import MainWindow
+from screens.settingsWindow import SettingWindow
 
 
 class MainThread(Thread):
@@ -19,6 +22,16 @@ class MainThread(Thread):
         self.isTimeLongBreak = False
         self.concetrationCount = 1
         self.setTime(self.data.sectionsTime)
+        # Instância o systrayIcon
+        self.trayIcon = SysTrayIcon(self)
+        # Inicia o System Tray Icon
+        self.trayIcon.show()
+        # Instância da janela principal
+        self.mainWindow = MainWindow(self)
+        # Abre uma instância da janela pelo systrayIcon
+        self.openMainWindow()
+        # Instância da janela de preferências
+        self.settingsWindow = SettingWindow()
 
     # __init__
 
@@ -58,26 +71,6 @@ class MainThread(Thread):
 
     # setLabelTrayIcon
 
-    def setWindow(self, mainWindow):
-        """Função que irá setar a janela principal
-
-        Args:
-            mainWindow (Ref QMainWindow): Referência da Janela principal
-        """
-        self.mainWindow = mainWindow
-
-    # setWindow
-
-    def setTrayIcon(self, trayIcon):
-        """Função que recebe a instância do trayIcon
-
-        Args:
-            trayIcon (Ref QTrayIcon): Referência da Instância do TrayIcon
-        """
-        self.trayIcon = trayIcon
-
-    # setTrayIcon
-
     def formatTime(self):
         """Função que irá formatar os segundos em minutos   
 
@@ -96,6 +89,7 @@ class MainThread(Thread):
         self.mainWindow.playButton.setVisible(False)
         self.trayIcon.playTime.setVisible(False)
         self.trayIcon.pauseTime.setVisible(True)
+
     # playCount
 
     def pauseCount(self):
@@ -118,6 +112,7 @@ class MainThread(Thread):
             self.setTime(self.data.shortBreakTime)
         else:
             self.setTime(self.data.longBreakTime)
+
     # resetCount
 
     def endTimer(self):
@@ -151,7 +146,7 @@ class MainThread(Thread):
         self.isTimeBreak = False
         self.isTimeLongBreak = False
         self.mainWindow.serieLabel.setText("Série " +
-                                               str(self.concetrationCount))
+                                           str(self.concetrationCount))
         self.mainWindow.serieLabel.setStyleSheet("color: #6A6969")
 
     # setConcentrationTime
@@ -191,7 +186,7 @@ class MainThread(Thread):
         """
         if (self.isTimeConcentration):
             # Mudanças na janela
-            self.mainWindow.concentrationMode()            
+            self.mainWindow.concentrationMode()
             # Mudanças no system Tray Icon
             icon = QIcon("images/icon_32.png")
             self.trayIcon.setIcon(icon)
@@ -204,3 +199,15 @@ class MainThread(Thread):
             self.trayIcon.setIcon(icon)
 
     # updateScreen
+
+    def openMainWindow(self):
+        """Abre a janela principal
+        """
+        self.mainWindow.show()
+
+    # openMainWindow
+
+    def openSettings(self):
+        """Abre a janela de preferências
+        """
+        self.settingsWindow.show()

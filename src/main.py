@@ -3,7 +3,7 @@ from PySide6 import QtGui
 from PySide6 import QtWidgets
 from PySide6 import QtCore
 import sys
-from components.sys_tray_icon import SysTrayIcon
+
 
 
 from controllers.c_timer import MainThread
@@ -20,12 +20,6 @@ if __name__ == "__main__":
     # Instância a thread principal
     mainThread = MainThread()
     # Inicio da Thread
-    mainThread.start()    
-    # Instância o systrayIcon
-    trayIcon = SysTrayIcon(mainThread)  
-        # Inicia o System Tray Icon
-    trayIcon.show()
-    # Abre uma instância da janela pelo systrayIcon
-    trayIcon.openMainWindow()
+    mainThread.start()        
 
     sys.exit(app.exec())

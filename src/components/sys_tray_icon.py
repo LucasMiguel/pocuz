@@ -14,7 +14,7 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         icon = QIcon("images/icon_32.png")
         self.menu = QtWidgets.QMenu()
         self.timeLabel = self.menu.addAction(self.mainThread.formatTime())
-        self.timeLabel.triggered.connect(self.openMainWindow)        
+        self.timeLabel.triggered.connect(self.mainThread.openMainWindow)        
         self.playTime = self.menu.addAction("Iniciar tempo")
         self.playTime.triggered.connect(self.mainThread.playCount)
         self.pauseTime = self.menu.addAction("Pausar tempo")
@@ -48,9 +48,6 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         # Cria o Trigger para o click duplo no icone
         self.activated.connect(self.iconActivated)
 
-        # Passa a label para alteração
-        self.mainThread.setTrayIcon(self)
-        self.mainThread.setWindow(self.mainWindow)
     # __init__
 
     def iconActivated(self, reason):
@@ -60,11 +57,6 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
             self.mainWindow.show()
     # iconActivated
 
-    def openMainWindow(self):
-        """Função que irá abrir uma nova instância da janela principal
-        """
-        self.mainWindow.show()
-    # openMainWindow
 
     def jumpToCicles(self, type):
         """Função que irá pular para um ciclo específico

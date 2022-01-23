@@ -9,7 +9,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, mainTread):
         super(MainWindow, self).__init__()
         self.mainThread = mainTread        
-        self.data = DataController()
+        self.data = DataController()        
         # Estilo dos botões grandes na concentração
         self.concentStyleButtonBig = str(
             "QPushButton{\n"
@@ -54,7 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setWindowModality(QtCore.Qt.WindowModal)
         self.resize(400, 413)
         self.setMinimumSize(QtCore.QSize(400, 413))
-        self.setMaximumSize(QtCore.QSize(400, 413))
+        self.setMaximumSize(QtCore.QSize(400, 413))       
         font = QtGui.QFont()
         self.setFont(font)
         icon = QtGui.QIcon()
@@ -184,7 +184,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menuButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.menuButton.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.menuButton.customContextMenuRequested.connect(self.onContextMenu)
-        self.menuOptions = QtWidgets.QMenu()
+        self.menuOptions = QtWidgets.QMenu()                
+        self.menuOptions.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         restartCicle = self.menuOptions.addAction("Recomeçar Ciclo")
         restartCicle.triggered.connect(self.mainThread.resetCount)
         settings = self.menuOptions.addAction("Preferências")
@@ -192,6 +193,7 @@ class MainWindow(QtWidgets.QMainWindow):
         about = self.menuOptions.addAction("Sobre")
         self.menuOptions.addSeparator()
         exit = self.menuOptions.addAction("Sair")
+        exit.triggered.connect(self.mainThread.exitApplication)
         self.menuButton.setMenu(self.menuOptions)
         ## ================================================================================================
         self.setCentralWidget(self.centralwidget)

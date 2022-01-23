@@ -1,6 +1,8 @@
 from threading import Thread
 from time import strftime, gmtime, time
 import time
+
+from PySide6 import os
 from components.notification import makeNotification
 from PySide6.QtGui import QIcon
 
@@ -28,6 +30,8 @@ class MainThread(Thread):
         self.trayIcon.show()
         # Instância da janela principal
         self.mainWindow = MainWindow(self)
+        # Instância da janela de preferências
+        self.settingsWindow = SettingWindow(self.data, self)
         # Abre uma instância da janela pelo systrayIcon
         self.openMainWindow()
         # __init__
@@ -185,14 +189,54 @@ class MainThread(Thread):
     def openMainWindow(self):
         """Abre a janela principal
         """
+        self.setDarkMode()
         self.mainWindow.show()
         # openMainWindow
 
     def openSettingsWindow(self):
         """Abre a janela de preferências
         """
-        # Instância da janela de preferências
-        self.settingsWindow = SettingWindow(self.data)
+        self.setDarkMode()
         self.settingsWindow.show()
         # openSettingsWindow
 
+    def setDarkMode(self):
+        self.data.getData()
+        if(self.data.darkTheme):
+            self.mainWindow.setStyleSheet('QMainWindow{background-color: #011627;}')            
+            self.mainWindow.menuOptions.setStyleSheet(
+                "QMenu{\n"
+                "background-color: #011627;\n"
+                "color:white;\n"            
+                "}\n"
+                "QMenu::item:selected{\n"
+                "background-color: rgba(11,222,236,0.37);\n"            
+                "}\n"                        
+            )
+            self.settingsWindow.setStyleSheet('QDialog{background-color: #011627;}')
+            self.settingsWindow.label_2.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_3.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_4.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_5.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_6.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_7.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_8.setStyleSheet("color: #FFFFFF")
+        else:
+            self.mainWindow.setStyleSheet('')            
+            self.mainWindow.menuOptions.setStyleSheet('')
+            self.settingsWindow.setStyleSheet('')            
+            self.settingsWindow.label.setStyleSheet("color: #515050")
+            self.settingsWindow.label_2.setStyleSheet('')
+            self.settingsWindow.label_3.setStyleSheet('')
+            self.settingsWindow.label_4.setStyleSheet('')
+            self.settingsWindow.label_5.setStyleSheet('')
+            self.settingsWindow.label_6.setStyleSheet('')
+            self.settingsWindow.label_7.setStyleSheet('')
+            self.settingsWindow.label_8.setStyleSheet('')
+        # setDarkMode
+
+    def exitApplication(self):
+        """Função que irá fechar a aplicação
+        """
+        os._exit(0)
+    # exitApplication

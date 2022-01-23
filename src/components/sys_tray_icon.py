@@ -39,7 +39,7 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.settings.triggered.connect(self.mainThread.openSettingsWindow)
         self.menu.addSeparator()
         exitAction = self.menu.addAction("Sair")
-        exitAction.triggered.connect(self.exitApplication)
+        exitAction.triggered.connect(self.mainThread.exitApplication)
         
         self.setIcon(icon)
         self.setContextMenu(self.menu)
@@ -75,11 +75,6 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.mainThread.updateTimeLabels()
         self.mainThread.playCount()
     # jumpToCicles
-
-    def exitApplication(self):
-        """Função que irá fechar a aplicação
-        """
-        os._exit(0)
-    # exitApplication
+   
     
         

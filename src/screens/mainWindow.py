@@ -193,6 +193,7 @@ class MainWindow(QtWidgets.QMainWindow):
         settings = self.menuOptions.addAction("Preferências")
         settings.triggered.connect(self.mainThread.openSettingsWindow)
         about = self.menuOptions.addAction("Sobre")
+        about.triggered.connect(self.mainThread.openAboutWindow)
         self.menuOptions.addSeparator()
         exit = self.menuOptions.addAction("Sair")
         exit.triggered.connect(self.mainThread.exitApplication)

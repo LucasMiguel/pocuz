@@ -37,6 +37,8 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         self.menu.addMenu(self.subMenu)
         self.settings = self.menu.addAction("Preferências")
         self.settings.triggered.connect(self.mainThread.openSettingsWindow)
+        self.about = self.menu.addAction("Sobre")
+        self.about.triggered.connect(self.mainThread.openAboutWindow)
         self.menu.addSeparator()
         exitAction = self.menu.addAction("Sair")
         exitAction.triggered.connect(self.mainThread.exitApplication)

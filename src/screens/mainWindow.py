@@ -59,7 +59,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setFont(font)
         icon = QtGui.QIcon()
         icon.addPixmap(
-            QtGui.QPixmap("../Imagens/Icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.On
+            QtGui.QPixmap("imagens/icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.On
         )
         self.setWindowIcon(icon)
         self.setAnimated(True)

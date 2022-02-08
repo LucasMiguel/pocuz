@@ -3,9 +3,9 @@ from time import strftime, gmtime, time
 import time
 
 from PySide6 import os
-from components.notification import makeNotification
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
+from components.notification import makeNotification
 
 from components.sys_tray_icon import SysTrayIcon
 from controllers.c_data import DataController
@@ -36,7 +36,7 @@ class MainThread(Thread):
         self.settingsWindow = SettingWindow(self.data, self)
         # Instância da janela de sobre
         self.aboutWindow = AboutWindow()
-        # Abre uma instância da janela pelo systrayIcon
+        # Abre uma instância da janela quando inicia a aplicação
         self.openMainWindow()
         # __init__
 
@@ -50,8 +50,10 @@ class MainThread(Thread):
                 self.updateTimeLabels()
                 if self.timeCount == 0:
                     self.endTimer()
-                # Delay de 1 segundo
-                time.sleep(1)
+                # # Delay de 1 segundo
+                # time.sleep(1)
+                # Delay temporario
+                time.sleep(0.2)
         # run
 
     def setTime(self, minutes):
@@ -122,10 +124,10 @@ class MainThread(Thread):
             self.setConcetrationTime()
         #Gera a notificação do final e do inicio do próximo ciclo
         if(self.data.notification):        
-            makeNotification(msg, self)
+            makeNotification(msg, self)        
         self.updateScreen()
         self.updateTimeLabels()
-        self.openMainWindow()
+        self.mainWindow.show()
         # endTimer
 
     def setConcetrationTime(self):

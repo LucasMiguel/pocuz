@@ -66,7 +66,7 @@ class SettingWindow(QtWidgets.QDialog):
         font.setFamily("Lato")
         self.spinBoxConcentration.setFont(font)
         self.spinBoxConcentration.setMinimum(1)
-        self.spinBoxConcentration.setMaximum(99)
+        self.spinBoxConcentration.setMaximum(60)
         self.spinBoxConcentration.setObjectName("spinBoxConcentration")
         self.spinBoxConcentration.setValue(data.sectionsTime)
         self.spinBoxConcentration.valueChanged.connect(lambda value: self.fieldChange(self.spinBoxConcentration))

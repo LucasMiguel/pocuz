@@ -1,7 +1,7 @@
 
 from PySide6 import QtGui
 from PySide6 import QtWidgets
-from PySide6 import QtCore
+from PySide6.QtCore import QThreadPool
 import sys
 
 
@@ -18,8 +18,5 @@ if __name__ == "__main__":
     # Define a fonte
     QtGui.QFontDatabase.addApplicationFont("fonts/Lato-Light.ttf")
     # Instância a thread principal
-    mainThread = MainThread()
-    # Inicio da Thread
-    mainThread.start()        
-
+    QThreadPool.globalInstance().start(MainThread(), 1)
     sys.exit(app.exec())

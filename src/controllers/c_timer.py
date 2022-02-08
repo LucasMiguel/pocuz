@@ -3,6 +3,7 @@ from time import strftime, gmtime, time
 import time
 
 from PySide6 import os
+from PySide6.QtCore import QRunnable, Slot
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from components.notification import makeNotification
@@ -14,7 +15,7 @@ from screens.mainWindow import MainWindow
 from screens.settingsWindow import SettingWindow
 
 
-class MainThread(Thread):
+class MainThread(QRunnable):
 
     def __init__(self):
         super().__init__()
@@ -40,6 +41,7 @@ class MainThread(Thread):
         self.openMainWindow()
         # __init__
 
+    @Slot()
     def run(self):
         """Função principal de contagem do tempo
         """
@@ -127,7 +129,7 @@ class MainThread(Thread):
             makeNotification(msg, self)        
         self.updateScreen()
         self.updateTimeLabels()
-        self.mainWindow.show()
+        self.openMainWindow()
         # endTimer
 
     def setConcetrationTime(self):

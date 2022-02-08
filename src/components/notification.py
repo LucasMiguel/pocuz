@@ -14,6 +14,8 @@ def makeNotification(msg,  mainThread):
     notification.message = msg
     notification.icon = "images/icon.png"
     if mainThread.data.alertSound:
-        notification.audio = "sound/notification_sound.wav"
+        notification.audio = "sound/notification_sound.wav"    
     notification.send()
+
+
     

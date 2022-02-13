@@ -1,8 +1,8 @@
 {
-    "sectionsTime": 1,
-    "shortBreakTime": 2,
-    "longBreakTime": 1,
-    "amountSections": 2,
+    "sectionsTime": 25,
+    "shortBreakTime": 5,
+    "longBreakTime": 15,
+    "amountSections": 4,
     "alertSound": true,
     "notification": true,
     "darkTheme": false,

@@ -1,6 +1,7 @@
 from threading import Thread
 from time import strftime, gmtime, time
 import time
+import resources
 
 from PySide6 import os
 from PySide6.QtCore import QRunnable, Slot, QThreadPool
@@ -183,14 +184,14 @@ class MainThread(QRunnable):
             # Mudanças na janela
             self.mainWindow.concentrationMode()
             # Mudanças no system Tray Icon
-            icon = QIcon("images/icon_32.png")
+            icon = QIcon(":/images/icon_32.png")
             self.trayIcon.setIcon(icon)
 
         else:
             # Mudanças na janela
             self.mainWindow.breakMode()
             # Mudanças no system Tray Icon
-            icon = QIcon("images/icon_32_break.png")
+            icon = QIcon(":/images/icon_32_break.png")
             self.trayIcon.setIcon(icon)
         # updateScreen
 

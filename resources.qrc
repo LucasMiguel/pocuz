@@ -1,0 +1,18 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource prefix="/">
+   <file>images/break.png</file>
+   <file>images/concentration.png</file>
+   <file>images/icon_32_break.png</file>
+   <file>images/icon_32.png</file>
+   <file>images/icon_about.png</file>
+   <file>images/icon.png</file>
+   <file>images/icon.ico</file>
+   <file>images/menu_button.png</file>
+   <file>images/pause.png</file>   
+   <file>images/play.png</file>   
+   <file>images/undo.png</file>   
+   <file>fonts/Lato-Light.ttf</file>
+   <file>data/data.json</file>
+</qresource>
+</RCC>

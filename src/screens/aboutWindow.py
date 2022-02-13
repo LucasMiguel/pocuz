@@ -2,6 +2,7 @@ from threading import main_thread
 from PySide6 import QtGui
 from PySide6 import QtWidgets
 from PySide6 import QtCore
+import resources
 
 class AboutWindow(QtWidgets.QDialog):
     def __init__(self):
@@ -11,13 +12,13 @@ class AboutWindow(QtWidgets.QDialog):
         self.setMinimumSize(QtCore.QSize(400, 413))
         self.setMaximumSize(QtCore.QSize(400, 413))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setWindowIcon(icon)
         self.setModal(True)
         self.label = QtWidgets.QLabel(self)
         self.label.setGeometry(QtCore.QRect(20, 50, 141, 131))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("images/icon_about.png"))
+        self.label.setPixmap(QtGui.QPixmap(":/images/icon_about.png"))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self)
         self.label_2.setGeometry(QtCore.QRect(190, 80, 161, 61))

@@ -1,4 +1,5 @@
 import json
+import resources
 
 class DataController(object):
     def __init__(self):

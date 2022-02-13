@@ -1,6 +1,7 @@
 from PySide6 import QtGui
 from PySide6 import QtWidgets
 from PySide6 import QtCore
+import resources
 
 from controllers.c_data import DataController
 
@@ -57,7 +58,7 @@ class MainWindow(QtWidgets.QMainWindow):
         font = QtGui.QFont()
         self.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setWindowIcon(icon)
         self.setAnimated(True)
         self.centralwidget = QtWidgets.QWidget(self)
@@ -85,7 +86,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.playButton.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(
-            QtGui.QPixmap("images/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap(":/images/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
         self.playButton.setIcon(icon1)
         self.playButton.setIconSize(QtCore.QSize(50, 50))
@@ -101,7 +102,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pauseButton.setText("")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(
-            QtGui.QPixmap("images/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap(":/images/pause.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
         self.pauseButton.setIcon(icon4)
         self.pauseButton.setIconSize(QtCore.QSize(45, 45))
@@ -117,7 +118,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.concetrationButton.setText("")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(
-            QtGui.QPixmap("images/concentration.png"),
+            QtGui.QPixmap(":/images/concentration.png"),
             QtGui.QIcon.Normal,
             QtGui.QIcon.Off,
         )
@@ -134,7 +135,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.breakButton.setText("")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(
-            QtGui.QPixmap("images/break.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap(":/images/break.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
         self.breakButton.setIcon(icon3)
         self.breakButton.setIconSize(QtCore.QSize(26, 26))
@@ -149,7 +150,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.undoButton.setText("")
         icon5 = QtGui.QIcon()
         icon5.addPixmap(
-            QtGui.QPixmap("images/undo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap(":/images/undo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
         self.undoButton.setIcon(icon5)
         self.undoButton.setIconSize(QtCore.QSize(20, 20))
@@ -174,7 +175,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         icon6 = QtGui.QIcon()
         icon6.addPixmap(
-            QtGui.QPixmap("images/menu_button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
+            QtGui.QPixmap(":/images/menu_button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off
         )
         self.menuButton.setIcon(icon6)
         self.menuButton.setIconSize(QtCore.QSize(35, 35))

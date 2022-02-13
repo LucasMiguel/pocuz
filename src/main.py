@@ -3,6 +3,7 @@ from PySide6 import QtGui
 from PySide6 import QtWidgets
 from PySide6.QtCore import QThreadPool
 import sys
+import resources
 
 
 
@@ -16,7 +17,7 @@ if __name__ == "__main__":
     # Desabilita o fechamento da janela pelo modal
     app.setQuitOnLastWindowClosed(False)    
     # Define a fonte
-    QtGui.QFontDatabase.addApplicationFont("fonts/Lato-Light.ttf")
+    QtGui.QFontDatabase.addApplicationFont(":/fonts/Lato-Light.ttf")
     # Instância a thread principal
     QThreadPool.globalInstance().start(MainThread(), 2)
     sys.exit(app.exec())

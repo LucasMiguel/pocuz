@@ -12,6 +12,7 @@ class DataController(object):
             self.notification = self.data['notification']
             self.alertSound = self.data['alertSound']
             self.darkTheme = self.data['darkTheme']
+            self.popup = self.data['popup']
         except print(Exception):
             pass
 
@@ -35,6 +36,7 @@ class DataController(object):
             self.data['alertSound'] = self.alertSound
             self.data['notification'] = self.notification
             self.data['darkTheme'] = self.darkTheme
+            self.data['popup'] = self.popup
             file.seek(0)
             try:
                 json.dump(self.data, file, indent=4)

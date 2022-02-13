@@ -18,5 +18,5 @@ if __name__ == "__main__":
     # Define a fonte
     QtGui.QFontDatabase.addApplicationFont("fonts/Lato-Light.ttf")
     # Instância a thread principal
-    QThreadPool.globalInstance().start(MainThread(), 1)
+    QThreadPool.globalInstance().start(MainThread(), 2)
     sys.exit(app.exec())

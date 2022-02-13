@@ -54,10 +54,15 @@ class SettingWindow(QtWidgets.QDialog):
         self.label_7.setStyleSheet("color: #FFFFFF")
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(self)
-        self.label_8.setGeometry(QtCore.QRect(20, 330, 281, 18))
+        self.label_8.setGeometry(QtCore.QRect(20, 365, 281, 18))
         self.label_8.setStyleSheet("color: #FFFFFF")
         self.label_8.setFont(font)
         self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self)
+        self.label_9.setGeometry(QtCore.QRect(20, 330, 281, 18))
+        self.label_9.setStyleSheet("color: #FFFFFF")
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
         # ==== SPINS ==============================================================================
             # === CONCENTRATION ===================================================================
         self.spinBoxConcentration = QtWidgets.QSpinBox(self)
@@ -121,11 +126,18 @@ class SettingWindow(QtWidgets.QDialog):
         self.checkBoxNotificationSound.stateChanged.connect(lambda value: self.fieldChange(self.checkBoxNotificationSound))
             #  ==== DARK THEME =============================================================================
         self.checkBoxDarkTheme = QtWidgets.QCheckBox(self)
-        self.checkBoxDarkTheme.setGeometry(QtCore.QRect(310, 320, 21, 24))
+        self.checkBoxDarkTheme.setGeometry(QtCore.QRect(310, 360, 21, 24))
         self.checkBoxDarkTheme.setText("")
         self.checkBoxDarkTheme.setObjectName("checkBoxDarkTheme")
         self.checkBoxDarkTheme.setChecked(self.data.darkTheme)
         self.checkBoxDarkTheme.stateChanged.connect(lambda value: self.fieldChange(self.checkBoxDarkTheme))
+            #  ==== POPUP WINDOW =============================================================================
+        self.checkPopUpWindow = QtWidgets.QCheckBox(self)
+        self.checkPopUpWindow.setGeometry(QtCore.QRect(310, 320, 21, 24))
+        self.checkPopUpWindow.setText("")
+        self.checkPopUpWindow.setObjectName("checkBoxPopUp")
+        self.checkPopUpWindow.setChecked(self.data.popup)
+        self.checkPopUpWindow.stateChanged.connect(lambda value: self.fieldChange(self.checkPopUpWindow))
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -141,6 +153,8 @@ class SettingWindow(QtWidgets.QDialog):
         self.label_6.setText(_translate("self", "Notificação sonora"))
         self.label_7.setText(_translate("self", "Notificação"))
         self.label_8.setText(_translate("self", "Tema Dark"))
+        self.label_9.setText(_translate("self", "Pop-Up janela fim do tempo"))
+        
     
 
     def fieldChange(self, field):
@@ -161,8 +175,10 @@ class SettingWindow(QtWidgets.QDialog):
             self.data.notification = field.isChecked()
         elif(field == self.checkBoxNotificationSound):
             self.data.alertSound = field.isChecked()
-        else:
+        elif(field == self.checkBoxDarkTheme):
             self.data.darkTheme = field.isChecked()
+        else:
+            self.data.popup = field.isChecked()
         # Atualiza os dados
         self.data.setData()
         self.mainThread.setDarkMode()

@@ -3,7 +3,7 @@ from time import strftime, gmtime, time
 import time
 
 from PySide6 import os
-from PySide6.QtCore import QRunnable, Slot
+from PySide6.QtCore import QRunnable, Slot, QThreadPool
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
 from components.notification import makeNotification
@@ -50,7 +50,7 @@ class MainThread(QRunnable):
                 self.timeCount = self.timeCount - 1
                 # print(self.timeCount)
                 self.updateTimeLabels()
-                if self.timeCount == 0:
+                if self.timeCount == 0:                    
                     self.endTimer()
                 # # Delay de 1 segundo
                 # time.sleep(1)
@@ -129,7 +129,9 @@ class MainThread(QRunnable):
             makeNotification(msg, self)        
         self.updateScreen()
         self.updateTimeLabels()
-        self.openMainWindow()
+        if(self.data.popup):
+            self.openPopupWindow()
+        
         # endTimer
 
     def setConcetrationTime(self):
@@ -196,10 +198,17 @@ class MainThread(QRunnable):
 
     def openMainWindow(self):
         """Abre a janela principal
-        """        
-        self.setDarkMode()
-        self.mainWindow.show()
+        """         
+        self.setDarkMode()        
+        self.mainWindow.show()                
+    
         # openMainWindow
+
+    def openPopupWindow(self):
+        """Função que irá abrir a janela principal ao final do tempo
+        """
+        self.trayIcon.timeLabel.trigger()      
+        # openPopupWindow
 
     def openSettingsWindow(self):
         """Abre a janela de preferências
@@ -245,6 +254,7 @@ class MainThread(QRunnable):
             self.settingsWindow.label_6.setStyleSheet("color: #FFFFFF")
             self.settingsWindow.label_7.setStyleSheet("color: #FFFFFF")
             self.settingsWindow.label_8.setStyleSheet("color: #FFFFFF")
+            self.settingsWindow.label_9.setStyleSheet("color: #FFFFFF")
             # AboutWindow
             self.aboutWindow.setStyleSheet('QDialog{background-color: #011627;}')
             self.aboutWindow.label.setStyleSheet("color: #FFFFFF")
@@ -269,6 +279,7 @@ class MainThread(QRunnable):
             self.settingsWindow.label_6.setStyleSheet('')
             self.settingsWindow.label_7.setStyleSheet('')
             self.settingsWindow.label_8.setStyleSheet('')
+            self.settingsWindow.label_9.setStyleSheet('')
             # AboutWindow
             self.aboutWindow.setStyleSheet('')
             self.aboutWindow.label.setStyleSheet("")

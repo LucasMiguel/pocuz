@@ -53,9 +53,7 @@ class MainThread(QRunnable):
                 if self.timeCount == 0:                    
                     self.endTimer()
                 # # Delay de 1 segundo
-                # time.sleep(1)
-                # Delay temporario
-                time.sleep(0.2)
+                time.sleep(1)
         # run
 
     def setTime(self, minutes):
@@ -201,13 +199,14 @@ class MainThread(QRunnable):
         """         
         self.setDarkMode()        
         self.mainWindow.show()                
-    
         # openMainWindow
 
     def openPopupWindow(self):
         """Função que irá abrir a janela principal ao final do tempo
-        """
-        self.trayIcon.timeLabel.trigger()      
+        """        
+        if(self.mainWindow.isMinimized):
+            self.mainWindow.hide()
+        self.trayIcon.timeLabel.trigger()     
         # openPopupWindow
 
     def openSettingsWindow(self):

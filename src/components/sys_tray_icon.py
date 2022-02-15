@@ -57,7 +57,7 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
         """Função que irá abrir uma nova janela caso clique duas vezes no icone
         """
         if reason == QtWidgets.QSystemTrayIcon.DoubleClick:
-            self.mainWindow.show()
+            self.mainThread.openMainWindow()
     # iconActivated
 
 

@@ -5,6 +5,6 @@
     "amountSections": 4,
     "alertSound": true,
     "notification": true,
-    "darkTheme": false,
+    "darkTheme": true,
     "popup": true
 }

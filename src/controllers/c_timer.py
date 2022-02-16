@@ -105,6 +105,8 @@ class MainThread(QRunnable):
             self.setTime(self.data.shortBreakTime)
         else:
             self.setTime(self.data.longBreakTime)
+        # Atualiza a tela após 
+        self.updateTimeLabels()
         # resetCount
 
     def endTimer(self):
@@ -130,7 +132,6 @@ class MainThread(QRunnable):
         self.updateTimeLabels()
         if(self.data.popup):
             self.openPopupWindow()
-        
         # endTimer
 
     def setConcetrationTime(self):

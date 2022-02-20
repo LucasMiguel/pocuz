@@ -14,5 +14,6 @@
    <file>images/undo.png</file>   
    <file>fonts/Lato-Light.ttf</file>
    <file>data/data.json</file>
+   <file>sound/notification_sound.wav</file>
 </qresource>
 </RCC>

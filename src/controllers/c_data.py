@@ -5,8 +5,8 @@ import resources
 class DataController(object):
     def __init__(self):
         super(DataController, self).__init__()
-        if os.path.isfile('/usr/share/data/data.json'):
-            self.path = "/usr/share/"
+        if os.path.isfile('/usr/share/pocuz/data/data.json'):
+            self.path = "/usr/share/pocuz/"
         else:
             self.path = ""
         self.getData()

@@ -11,8 +11,8 @@ def makeNotification(msg,  mainThread):
         sound (bool, optional): Informa se a notificação terá som. Defaults to False.
         mainThread
     """
-    if os.path.isfile('/usr/share/images/icon.png'):
-        path = "/usr/share/"
+    if os.path.isfile('/usr/share/pocuz/images/icon.png'):
+        path = "/usr/share/pocuz/"
     else:
         path = ""
 

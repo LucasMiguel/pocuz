@@ -1,8 +1,8 @@
 import PyInstaller.__main__
 
 PyInstaller.__main__.run([
-    '../../src/main.py',
-    '--onefile',
+    '../../src/main.py',   
+    '--onefile', 
     # Incluindo o banco de dados
     '--add-data=../../data/data.json:data',
     # Incluindo arquivos de imagem

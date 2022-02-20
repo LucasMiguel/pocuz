@@ -1,4 +1,4 @@
-import os
+import resources
 from PySide6 import QtWidgets
 from PySide6.QtGui import QIcon
 
@@ -11,7 +11,7 @@ class SysTrayIcon(QtWidgets.QSystemTrayIcon):
 
         self.mainWindow = MainWindow(self.mainThread)
 
-        icon = QIcon("images/icon_32.png")
+        icon = QIcon(":/images/icon_32.png")
         self.menu = QtWidgets.QMenu()
         self.timeLabel = self.menu.addAction(self.mainThread.formatTime())
         self.timeLabel.triggered.connect(self.mainThread.openMainWindow)        

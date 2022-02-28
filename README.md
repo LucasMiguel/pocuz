@@ -2,10 +2,11 @@
 # Pocuz  
 
 Aplicação para utilização da técnica de pomodoro.
+Ele está disponível para Windows 10, distros baseadas em Red Hat e baseadas em Debian.
 
 # Instalação
 
-### Windows
+### Windows 10
 
 * Baixe o arquivo [pocuz-setup.exe](https://github.com/LucasMiguel/pocuz/releases/download/v0.1.0-release/pocuz-setup.exe);
 * Execute;
